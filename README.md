@@ -23,5 +23,8 @@ We need to build a CPP controller and tune the parameters based on the different
 
 We will be implementing this basic cascaded controller for this project as shown in the image.
 <p align="center">
-<img src="cascade_controller.png" width="500"/>
+<img src="cascade_controller.png" width="650"/>
 </p>
+
+**Scenarios**
+
