@@ -73,3 +73,17 @@ Aim of this scenario is to test the quad's performance once again on a trajector
 <img src="animation/5.gif" width="500"/>
 <img src="animation/5.png" width="500"/>
 </p>
+
+### Implemented Controller ###
+
+1. Implemented Body rate control
+
+`V3F momentI;
+
+  momentI.x = Ixx;
+  momentI.y = Iyy;
+  momentI.z = Izz;
+    
+  V3F err_rate = (pqrCmd - pqr);
+
+  momentCmd = momentI * kpPQR * err_rate ; `
