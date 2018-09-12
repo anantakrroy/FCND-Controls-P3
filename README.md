@@ -23,5 +23,14 @@ We need to build a CPP controller and tune the parameters based on the different
 
 We will be implementing this basic cascaded controller for this project as shown in the image.
 <p align="center">
-<img src="cascaded_controller.png" width="500"/>
+<img src="cascade_controller.png" width="650"/>
+</p>
+
+**Scenarios**
+
+### Scenario 1 ###
+This is the Intro scene. The `mass` is so adjusted that the quad is able to hover at a constant altitude as long as possible.
+<p align="center">
+<img src="animation/1.gif" width="500"/>
+<img src="animation/1.png" width="500"/>
 </p>
