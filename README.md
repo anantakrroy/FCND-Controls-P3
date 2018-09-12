@@ -28,7 +28,7 @@ We will be implementing this basic cascaded controller for this project as shown
 
 ### Scenarios ###
 
-** Scenario 1 - Intro **
+###### Scenario 1 - Intro ######
 
 This is the Intro scene. The `mass` is so adjusted that the quad is able to hover at a constant altitude as long as possible.
 <p align="center">
@@ -36,7 +36,7 @@ This is the Intro scene. The `mass` is so adjusted that the quad is able to hove
 <img src="animation/1.png" width="500"/>
 </p>
 
-** Scenario 2 - Body rate and roll/pitch control **
+###### Scenario 2 - Body rate and roll/pitch control ######
 
 Quad is created with a small initial rotation speed about its roll axis. The controller needs to stabilize the rotational motion and bring the vehicle back to level attitude.
 <p align="center">
@@ -44,7 +44,7 @@ Quad is created with a small initial rotation speed about its roll axis. The con
 <img src="animation/2.png" width="500"/>
 </p>
 
-** Scenario 3 - Position/velocity and yaw angle control **
+###### Scenario 3 - Position/velocity and yaw angle control ######
 
 There are 2 identical quads, one offset from its target point (but initialized with yaw = 0) and second offset from target point but yaw = 45 degrees. On successful implementation and tuning, the quads should be going to their destination points.
 <p align="center">
@@ -52,7 +52,7 @@ There are 2 identical quads, one offset from its target point (but initialized w
 <img src="animation/3.png" width="500"/>
 </p>
 
-** Scenario 4 - Non-idealities and robustness **
+###### Scenario 4 - Non-idealities and robustness ######
 
 This scenario explores some of the non-idealities and robustness of a controller. There are three quads.
  - The green quad has its center of mass shifted back
@@ -64,7 +64,7 @@ This scenario explores some of the non-idealities and robustness of a controller
 <img src="animation/4.png" width="500"/>
 </p>
 
-** Scenario 5 - Tracking trajectories **
+###### Scenario 5 - Tracking trajectories ######
 
 Aim of this scenario is to test the quad's performance once again on a trajectory. This scenario has two quadcopters:
  - the orange one is following `traj/FigureEight.txt`
