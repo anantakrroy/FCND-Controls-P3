@@ -26,9 +26,9 @@ We will be implementing this basic cascaded controller for this project as shown
 <img src="cascade_controller.png" width="650"/>
 </p>
 
-**Scenarios**
+###Scenarios###
 
-### Scenario 1 ###
+** Scenario 1 **
 This is the Intro scene. The `mass` is so adjusted that the quad is able to hover at a constant altitude as long as possible.
 <p align="center">
 <img src="animation/1.gif" width="500"/>
