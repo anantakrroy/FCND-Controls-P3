@@ -86,4 +86,4 @@ Aim of this scenario is to test the quad's performance once again on a trajector
     
   V3F err_rate = (pqrCmd - pqr);
 
-  momentCmd = momentI * kpPQR * err_rate ; ```
+  momentCmd = momentI * kpPQR * err_rate```
