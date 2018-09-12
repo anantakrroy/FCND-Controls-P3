@@ -76,7 +76,7 @@ Aim of this scenario is to test the quad's performance once again on a trajector
 
 ### Implemented Controller ###
 
-1. Implemented Body rate control
+#### 1. Implemented Body rate control
 
 ```
   V3F momentI;
@@ -89,3 +89,103 @@ Aim of this scenario is to test the quad's performance once again on a trajector
 
   momentCmd = momentI * kpPQR * err_rate
  ```
+#### 2. Implemented roll pitch control
+
+```
+float targetBX = 0.0;
+  float targetBY = 0.0;
+  if (collThrustCmd > 0.0)
+  {
+      float c = collThrustCmd/mass;
+      targetBX = -CONSTRAIN(accelCmd.x/c, -maxTiltAngle, maxTiltAngle);
+      targetBY = -CONSTRAIN(accelCmd.y/c, -maxTiltAngle, maxTiltAngle);
+  }
+  float bX = targetBX - R(0, 2);
+  float bY = targetBY - R(1, 2);
+
+  pqrCmd.x = kpBank *((R(1, 0) * bX) - (R(0, 0) * bY)) / R(2, 2);
+  pqrCmd.y = kpBank *((R(1, 1) * bX) - (R(0, 1) * bY)) / R(2, 2);
+  pqrCmd.z = 0.f;
+  
+  ```
+  
+  #### 3. Implemented Altitude control
+  
+  ```
+  float b_z = R(2,2);
+
+  float err_z = posZCmd - posZ;
+
+  integratedAltitudeError += err_z * dt;
+
+  //PID control altitude controller
+
+  float p = kpPosZ * err_z;
+  float i = KiPosZ * integratedAltitudeError;
+
+ //float acc_z_cmd = p + i + d + accelZCmd;
+    
+  float velZRef = velZCmd + p + i;
+  velZRef = -CONSTRAIN(-velZRef, -maxDescentRate, maxAscentRate);
+    
+  float err_z_vel = velZRef - velZ;
+  float d = kpVelZ * err_z_vel;
+    
+  float accelCmd = accelZCmd + d;
+  thrust = mass * (9.81f - (accelCmd / b_z));
+  
+  ```
+  
+  #### 4. Implemented lateral position control
+  
+  ```
+  velCmd.constrain(-maxSpeedXY,maxSpeedXY);
+
+  V3F posErr = posCmd - pos;
+  V3F velErr = velCmd - vel;
+
+  accelCmd = accelCmdFF + (kpPosXY * posErr) + (kpVelXY * velErr); //z compent is zero, so let's ignore use kpPosXY/kpVelXY for pos.z/vel.z as well
+  accelCmd.constrain(-maxAccelXY,maxAccelXY);
+
+  accelCmd.z = 0;
+  
+ ```
+ 
+ #### 5. Implemented yaw control
+ 
+ ```
+ yawCmd = fmod(yawCmd, (2.0f*F_PI));
+
+  if (yawCmd <= -F_PI)
+  {
+     yawCmd += (2.0f*F_PI);
+  }
+  else if (yawCmd > F_PI)
+  {
+     yawCmd -= (2.0f*F_PI);
+  }
+
+  yawRateCmd = kpYaw * (yawCmd - yaw);
+  
+  ```
+  #### 6. Implemented Motor commands
+  
+  ```
+  // Total thrust is given by F_total
+  float len = L / sqrtf(2.f);
+  float F_total = collThrustCmd ;
+
+  // Moment = Force * length
+  float F_rotX = momentCmd.x / len; //Moment about the X-axis, roll i.e F1+F4-F2-F3
+  float F_rotY = momentCmd.y / len; //Moment about the Y-axis, pitch i.e F1+F2-F3-F4
+  float F_rotZ = -momentCmd.z / kappa; //Moment about the Z-axis, yaw i.e F
+
+  // front left  - f1, front right - f2, rear left   - f4, rear right  - f3
+
+  cmd.desiredThrustsN[0] = (F_total + F_rotX + F_rotY + F_rotZ)/4.f;  
+  cmd.desiredThrustsN[1] = (F_total - F_rotX + F_rotY - F_rotZ )/4.f;  
+  cmd.desiredThrustsN[2] = (F_total + F_rotX - F_rotY - F_rotZ )/4.f ;  
+  cmd.desiredThrustsN[3] = (F_total - F_rotX - F_rotY + F_rotZ )/4.f;  
+  
+  ```
+  
