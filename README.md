@@ -78,7 +78,7 @@ Aim of this scenario is to test the quad's performance once again on a trajector
 
 1. Implemented Body rate control
 
-`V3F momentI;
+```V3F momentI;
 
   momentI.x = Ixx;
   momentI.y = Iyy;
@@ -86,4 +86,4 @@ Aim of this scenario is to test the quad's performance once again on a trajector
     
   V3F err_rate = (pqrCmd - pqr);
 
-  momentCmd = momentI * kpPQR * err_rate ; `
+  momentCmd = momentI * kpPQR * err_rate ; ```
